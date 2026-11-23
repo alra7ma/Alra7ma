@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">مراقب العداد</string>
+    <string name="tab_counter_page">العداد والصفحة</string>
+    <string name="tab_alerts_history">الخلفية والسجل</string>
+
+    <string name="status_monitoring">مراقبة حية نشطة</string>
+    <string name="status_paused">المراقبة متوقفة مؤقتاً</string>
+    <string name="status_loading">جاري تحميل الصفحة…</string>
+    <string name="status_error">تعذر تحميل الصفحة</string>
+
+    <string name="hero_current_reading">العداد الإجمالي في الصفحة</string>
+    <string name="hero_waiting_value">--</string>
+    <string name="hero_waiting_hint">جاري قراءة العداد من صفحة أرقام فودافون RED، أو المس أي رقم لتحديده</string>
+    <string name="hero_last_update">آخر قراءة: %1$s</string>
+    <string name="hero_changes_count">التغييرات: %1$d</string>
+    <string name="hero_previous_value">السابق: %1$s</string>
+
+    <string name="action_pause">إيقاف</string>
+    <string name="action_resume">استئناف</string>
+    <string name="action_reload">تحديث</string>
+    <string name="action_snapshot">حفظ</string>
+    <string name="action_pick_element">تحديد باللمس</string>
+    <string name="action_stop_picking">إنهاء التحديد</string>
+    <string name="action_clear_pin">تلقائي</string>
+    <string name="action_reset_url">استعادة رابط فودافون</string>
+    <string name="action_clear_history">مسح السجل</string>
+
+    <string name="candidates_title">العدادات المكتشفة</string>
+    <string name="pinned_badge">مثبت يدوياً</string>
+    <string name="auto_badge">كشف تلقائي</string>
+
+    <string name="picker_banner_title">وضع التحديد اليدوي نشط</string>
+    <string name="picker_banner_subtitle">المس أي عداد أو مؤقت أو رقم داخل الصفحة لتثبيت مراقبته</string>
+
+    <string name="chart_title">مخطط تغيّر القيم</string>
+    <string name="chart_empty">سيظهر الرسم البياني بمجرد تسجيل قراءتين رقميتين أو أكثر</string>
+
+    <string name="background_section_title">الفحص في الخلفية (WorkManager)</string>
+    <string name="background_enable_toggle">تفعيل الفحص الدوري في الخلفية (كل 15 دقيقة)</string>
+    <string name="background_run_now">فحص الخلفية الآن</string>
+    <string name="background_last_check">آخر فحص بالخلفية: %1$s</string>
+    <string name="background_status_never">لم يتم الفحص في الخلفية بعد</string>
+
+    <string name="auto_reload_title">التحديث التلقائي داخل التطبيق</string>
+    <string name="auto_reload_off">مباشر فقط</string>
+    <string name="auto_reload_every_seconds">كل %1$d ث</string>
+    <string name="auto_reload_next_in">تحديث خلال %1$d ث</string>
+
+    <string name="alerts_section_title">قواعد التنبيهات</string>
+    <string name="alert_on_increase">تنبيه محلي عند ارتفاع قيمة العداد الإجمالية فقط</string>
+    <string name="alert_on_change">تنبيه عند أي تغيّر في القيمة</string>
+    <string name="alert_on_zero">تنبيه عند وصول العداد إلى الصفر</string>
+    <string name="alert_threshold_toggle">تنبيه عند النزول عن حد معين</string>
+    <string name="alert_threshold_label">الحد الأدنى للتنبيه (ثانية / قيمة)</string>
+    <string name="alert_sound">تشغيل صوت التنبيه</string>
+    <string name="alert_vibration">تفعيل الاهتزاز</string>
+    <string name="alert_notifications">إشعارات النظام المحلية</string>
+    <string name="permission_notifications_needed">اسمح بالإشعارات لإرسال تنبيه محلي عند ارتفاع قيمة العداد</string>
+    <string name="permission_grant_button">تفعيل الإشعارات</string>
+
+    <string name="url_section_title">رابط الصفحة المستهدفة</string>
+    <string name="selector_section_title">محدد العنصر (CSS Selector)</string>
+    <string name="selector_hint">اتركه فارغاً للكشف التلقائي أو استخدم التحديد باللمس</string>
+    <string name="selector_apply">تطبيق</string>
+
+    <string name="history_section_title">سجل القراءات والتنبيهات</string>
+    <string name="history_empty">لا توجد قراءات مسجلة حتى الآن</string>
+    <string name="filter_all">الكل</string>
+    <string name="filter_changes">التغييرات</string>
+    <string name="filter_alerts">التنبيهات</string>
+
+    <string name="event_initial">قراءة أولى</string>
+    <string name="event_changed">تغيّر</string>
+    <string name="event_alert">تنبيه</string>
+    <string name="event_snapshot">لقطة يدوية</string>
+
+    <string name="notification_channel_name">تنبيهات مراقب العداد</string>
+    <string name="notification_channel_desc">إشعارات محلية فورية عند ارتفاع قيمة العداد أو تغيّره</string>
+    <string name="notification_alert_title">تنبيه العداد: %1$s</string>
+    <string name="notification_alert_body">القيمة الحالية: %1$s (%2$s)</string>
+</resources>

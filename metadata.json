@@ -1,0 +1,6 @@
+{
+  "name": "مراقب العداد",
+  "description": "تطبيق لقراءة ومراقبة العداد والمؤقت الحي داخل صفحة أرقام فودافون RED مع تنبيهات فورية وسجل تاريخي",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
