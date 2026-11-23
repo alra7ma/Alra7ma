@@ -52,6 +52,7 @@ data class MonitorUiState(
     val pageStatus: PageStatus = PageStatus.LOADING,
     val errorMessage: String? = null,
     val isMonitoring: Boolean = true,
+    val isCheckingCounter: Boolean = true,
     val isPickerActive: Boolean = false,
     val currentValue: String = "--",
     val previousValue: String? = null,
@@ -161,13 +162,20 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
             val next = !state.isMonitoring
             state.copy(
                 isMonitoring = next,
+                isCheckingCounter = next && state.currentValue == "--",
                 pageStatus = if (next) PageStatus.MONITORING else PageStatus.PAUSED
             )
         }
     }
 
     fun requestReload() {
-        _liveState.update { it.copy(pageStatus = PageStatus.LOADING, errorMessage = null) }
+        _liveState.update {
+            it.copy(
+                pageStatus = PageStatus.LOADING,
+                isCheckingCounter = true,
+                errorMessage = null
+            )
+        }
         reloadTriggerCallback?.invoke()
     }
 
@@ -187,6 +195,7 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun selectCandidate(candidate: CounterCandidate) {
+        _liveState.update { it.copy(isCheckingCounter = true) }
         viewModelScope.launch {
             repository.setPinnedSelector(candidate.selector)
             pinnedSelectorSyncCallback?.invoke(candidate.selector)
@@ -310,6 +319,7 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
             it.copy(
                 currentUrl = url,
                 pageStatus = if (it.isMonitoring) PageStatus.LOADING else PageStatus.PAUSED,
+                isCheckingCounter = it.isMonitoring,
                 errorMessage = null
             )
         }
@@ -321,6 +331,7 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
                 currentUrl = url,
                 pageProgress = 100,
                 pageStatus = if (it.isMonitoring) PageStatus.MONITORING else PageStatus.PAUSED,
+                isCheckingCounter = it.isMonitoring,
                 errorMessage = null
             )
         }
@@ -330,6 +341,7 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
         _liveState.update {
             it.copy(
                 pageStatus = PageStatus.ERROR,
+                isCheckingCounter = false,
                 errorMessage = description
             )
         }
@@ -461,6 +473,7 @@ class CounterViewModel(application: Application) : AndroidViewModel(application)
                 currentUrl = payload.url.ifBlank { state.currentUrl },
                 pageTitle = payload.title,
                 pageStatus = PageStatus.MONITORING,
+                isCheckingCounter = false,
                 currentValue = newVal,
                 previousValue = if (valueChanged) oldVal else state.previousValue,
                 currentNumeric = numeric,

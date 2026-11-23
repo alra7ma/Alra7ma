@@ -7,6 +7,7 @@
     <string name="status_paused">المراقبة متوقفة مؤقتاً</string>
     <string name="status_loading">جاري تحميل الصفحة…</string>
     <string name="status_error">تعذر تحميل الصفحة</string>
+    <string name="checking_counter_in_progress">جاري فحص قيمة العداد…</string>
 
     <string name="hero_current_reading">العداد الإجمالي في الصفحة</string>
     <string name="hero_waiting_value">--</string>

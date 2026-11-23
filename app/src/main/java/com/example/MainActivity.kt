@@ -10,6 +10,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -20,11 +25,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Speed
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Speed
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -43,6 +51,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -208,22 +217,35 @@ fun RedCounterMonitorApp(
                             )
                         }
 
-                        key(activeWebView) {
-                            AndroidView(
-                                factory = { activeWebView },
-                                update = { wv ->
-                                    val isLiveTab = selectedTab == AppTab.COUNTER_AND_PAGE
-                                    wv.visibility = if (isLiveTab) View.VISIBLE else View.INVISIBLE
-                                    wv.importantForAccessibility = if (isLiveTab) {
-                                        View.IMPORTANT_FOR_ACCESSIBILITY_YES
-                                    } else {
-                                        View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                                    }
-                                },
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                        ) {
+                            key(activeWebView) {
+                                AndroidView(
+                                    factory = { activeWebView },
+                                    update = { wv ->
+                                        val isLiveTab = selectedTab == AppTab.COUNTER_AND_PAGE
+                                        wv.visibility = if (isLiveTab) View.VISIBLE else View.INVISIBLE
+                                        wv.importantForAccessibility = if (isLiveTab) {
+                                            View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                                        } else {
+                                            View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .testTag("live_webview")
+                                )
+                            }
+
+                            WebViewCheckingPill(
+                                visible = selectedTab == AppTab.COUNTER_AND_PAGE &&
+                                    (uiState.isCheckingCounter || uiState.pageStatus == com.example.ui.PageStatus.LOADING),
                                 modifier = Modifier
-                                    .weight(1f)
-                                    .fillMaxWidth()
-                                    .testTag("live_webview")
+                                    .align(Alignment.TopCenter)
+                                    .padding(top = 12.dp)
                             )
                         }
                     }
@@ -267,6 +289,48 @@ fun RedCounterMonitorApp(
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun WebViewCheckingPill(
+    visible: Boolean,
+    modifier: Modifier = Modifier
+) {
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = modifier
+    ) {
+        Surface(
+            shape = CircleShape,
+            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+            tonalElevation = 6.dp,
+            shadowElevation = 6.dp,
+            border = BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
+            ),
+            modifier = Modifier.testTag("webview_checking_indicator")
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.5.dp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = stringResource(R.string.checking_counter_in_progress),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             }
         }
     }
